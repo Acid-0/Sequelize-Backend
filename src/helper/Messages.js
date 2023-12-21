@@ -5,6 +5,7 @@ module.exports = {
   MSG_NO_RECORD: "No Record Found.",
   MSG_SAVED: "Information Saved Successfully.",
   MSG_INVALID_DATA: "Invalid Data.",
+  MSG_INVALID_CAT_DATA: "MSG_INVALID_CAT_DATA",
   MSG_INVALID_Catageory: "Invalid Catageory ID.",
   MSG_INTERNAL_SERVER_ERROR: "Internal server error.",
   MSG_SUCCESS: "Information saved successfully.",

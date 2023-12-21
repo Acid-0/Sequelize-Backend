@@ -16,16 +16,16 @@ database.project_image = require("./project-image-model.js")(
 );
 database.analytics = require("./analytics-model.js")(sequelize, DataTypes);
 
-database.sequelize.sync({ force: false, alter: false }).then(() => {
+database.sequelize.sync({ force: false, alter: true }).then(() => {
   //   helperfunctions.writeConsole(`yes re-sync done`);
   console.log(`yes re-sync done`);
 });
 
 // FK of table category
-// database.project.hasMany(database.project, {
-//   foreignKey: "id",
-//   as: "base",
-// });
+database.project.hasMany(database.project_image, {
+  foreignKey: "project_id",
+  as: "images",
+});
 
 database.project_image.belongsTo(database.project, {
   foreignKey: "project_id",
