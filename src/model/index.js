@@ -16,7 +16,7 @@ database.project_image = require("./project-image-model.js")(
 );
 database.analytics = require("./analytics-model.js")(sequelize, DataTypes);
 
-database.sequelize.sync({ force: false, alter: true }).then(() => {
+database.sequelize.sync({ force: false, alter: false }).then(() => {
   //   helperfunctions.writeConsole(`yes re-sync done`);
   console.log(`yes re-sync done`);
 });

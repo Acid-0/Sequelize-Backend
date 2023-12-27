@@ -33,4 +33,5 @@ module.exports = {
   MSG_USER_NOT_FOUND: "User not found",
   MSG_DB_CONNECTION_SUCCESS: "Database Connection Successful",
   MSG_DB_CONNECTION_ERROR: "Database Connection Error",
+  MSG_IMAGES_LENGTH_EXCEED: "Images length exceeds.",
 };

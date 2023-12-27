@@ -12,52 +12,55 @@ async function postProjectController(req, res) {
     try {
         const body = req.body;
         const images = req.files;
-        if (
-            body.category >= Enums.category.web &&
-            body.category <= Enums.category.branding
-        ) {
-            const result = await service.postProjectService(body, images);
+        if (images?.length > 5) return res.json(common.error(Messages.MSG_IMAGES_LENGTH_EXCEED, Enums.ErrorCode.invalid_data))
+        else {
+            if (
+                body.category >= Enums.category.web &&
+                body.category <= Enums.category.branding
+            ) {
+                const result = await service.postProjectService(body, images);
 
-            if (result) {
-                if (body.id && result[0] === 1) {
-                    const data = common.success(
-                        Messages.MSG_UPDATE_SUCCESS,
-                        Enums.ErrorCode.success,
-                        result
-                    );
-                    return res.json(data);
-                } else if (!body.id) {
-                    const data = common.success(
-                        Messages.MSG_SUCCESS,
-                        Enums.ErrorCode.success,
-                        result
-                    );
-                    return res.json(data);
+                if (result) {
+                    if (body.id && result[0] === 1) {
+                        const data = common.success(
+                            Messages.MSG_UPDATE_SUCCESS,
+                            Enums.ErrorCode.success,
+                            result
+                        );
+                        return res.json(data);
+                    } else if (!body.id) {
+                        const data = common.success(
+                            Messages.MSG_SUCCESS,
+                            Enums.ErrorCode.success,
+                            result
+                        );
+                        return res.json(data);
+                    } else {
+                        const data = common.success(
+                            Messages.MSG_UPDATE_FAILED,
+                            Enums.ErrorCode.success,
+                            result
+                        );
+                        return res.json(data);
+                    }
                 } else {
-                    const data = common.success(
-                        Messages.MSG_UPDATE_FAILED,
-                        Enums.ErrorCode.success,
-                        result
+                    const data = common.error(
+                        Messages.MSG_INVALID_DATA,
+                        Enums.ErrorCode.failed
                     );
                     return res.json(data);
                 }
             } else {
                 const data = common.error(
-                    Messages.MSG_INVALID_DATA,
+                    Messages.MSG_INVALID_CAT_DATA,
                     Enums.ErrorCode.failed
                 );
                 return res.json(data);
             }
-        } else {
-            const data = common.error(
-                Messages.MSG_INVALID_DATA,
-                Enums.ErrorCode.failed
-            );
-            return res.json(data);
         }
     } catch (error) {
         const data = common.error(
-            Messages.MSG_INVALID_CAT_DATA,
+            Messages.MSG_DB_CONNECTION_ERROR,
             Enums.ErrorCode.failed,
             error.name
         );
@@ -77,7 +80,7 @@ async function getProjectController(req, res) {
             return res.json(data);
         } else {
             const data = common.error(
-                Messages.MSG_INVALID_DATA,
+                Messages.MSG_NO_RECORD,
                 Enums.ErrorCode.not_exist
             );
             return res.json(data);
